@@ -58,79 +58,79 @@ public class EmulatorDetectUtil {
                 return true;
         }
 
-        //检测渠道
-        CheckResult flavorResult = checkFeaturesByFlavor();
-        Log.d(TAG, "flavorResult: " + flavorResult.result);
-        switch (flavorResult.result) {
-            case RESULT_MAYBE_EMULATOR:
-                ++suspectCount;
-                break;
-            case RESULT_EMULATOR:
-                return true;
-        }
-
-        //检测设备型号
-        CheckResult modelResult = checkFeaturesByModel();
-        Log.d(TAG, "modelResult: " + modelResult.result);
-        switch (modelResult.result) {
-            case RESULT_MAYBE_EMULATOR:
-                ++suspectCount;
-                break;
-            case RESULT_EMULATOR:
-                return true;
-        }
-
-        //检测硬件制造商
-        CheckResult manufacturerResult = checkFeaturesByManufacturer();
-        Log.d(TAG, "manufacturerResult: " + manufacturerResult.result);
-        switch (manufacturerResult.result) {
-            case RESULT_MAYBE_EMULATOR:
-                ++suspectCount;
-                break;
-            case RESULT_EMULATOR:
-                return true;
-        }
-
-        //检测主板名称
-        CheckResult boardResult = checkFeaturesByBoard();
-        Log.d(TAG, "boardResult: " + boardResult.result);
-        switch (boardResult.result) {
-            case RESULT_MAYBE_EMULATOR:
-                ++suspectCount;
-                break;
-            case RESULT_EMULATOR:
-                return true;
-        }
-
-        //检测主板平台
-        CheckResult platformResult = checkFeaturesByPlatform();
-        Log.d(TAG, "platformResult: " + platformResult.result);
-        switch (platformResult.result) {
-            case RESULT_MAYBE_EMULATOR:
-                ++suspectCount;
-                break;
-            case RESULT_EMULATOR:
-                return true;
-        }
-
-        //检测基带信息
-        CheckResult baseBandResult = checkFeaturesByBaseBand();
-        Log.d(TAG, "baseBandResult: " + baseBandResult.result);
-        switch (baseBandResult.result) {
-            case RESULT_MAYBE_EMULATOR:
-                suspectCount += 2;//模拟器基带信息为null的情况概率相当大
-                break;
-            case RESULT_EMULATOR:
-                return true;
-        }
-
-        //检测传感器数量
-        int sensorNumber = getSensorNumber(context);
-        Log.d(TAG, "sensorNumber = " + sensorNumber);
-        //传感器太少的有可能是低配或是老旧的真机平板
-        if (sensorNumber <= 7 && sensorNumber >= 4) {
-            ++suspectCount;
-        }
+//        //检测渠道
+//        CheckResult flavorResult = checkFeaturesByFlavor();
+//        Log.d(TAG, "flavorResult: " + flavorResult.result);
+//        switch (flavorResult.result) {
+//            case RESULT_MAYBE_EMULATOR:
+//                ++suspectCount;
+//                break;
+//            case RESULT_EMULATOR:
+//                return true;
+//        }
+//
+//        //检测设备型号
+//        CheckResult modelResult = checkFeaturesByModel();
+//        Log.d(TAG, "modelResult: " + modelResult.result);
+//        switch (modelResult.result) {
+//            case RESULT_MAYBE_EMULATOR:
+//                ++suspectCount;
+//                break;
+//            case RESULT_EMULATOR:
+//                return true;
+//        }
+//
+//        //检测硬件制造商
+//        CheckResult manufacturerResult = checkFeaturesByManufacturer();
+//        Log.d(TAG, "manufacturerResult: " + manufacturerResult.result);
+//        switch (manufacturerResult.result) {
+//            case RESULT_MAYBE_EMULATOR:
+//                ++suspectCount;
+//                break;
+//            case RESULT_EMULATOR:
+//                return true;
+//        }
+//
+//        //检测主板名称
+//        CheckResult boardResult = checkFeaturesByBoard();
+//        Log.d(TAG, "boardResult: " + boardResult.result);
+//        switch (boardResult.result) {
+//            case RESULT_MAYBE_EMULATOR:
+//                ++suspectCount;
+//                break;
+//            case RESULT_EMULATOR:
+//                return true;
+//        }
+//
+//        //检测主板平台
+//        CheckResult platformResult = checkFeaturesByPlatform();
+//        Log.d(TAG, "platformResult: " + platformResult.result);
+//        switch (platformResult.result) {
+//            case RESULT_MAYBE_EMULATOR:
+//                ++suspectCount;
+//                break;
+//            case RESULT_EMULATOR:
+//                return true;
+//        }
+//
+//        //检测基带信息
+//        CheckResult baseBandResult = checkFeaturesByBaseBand();
+//        Log.d(TAG, "baseBandResult: " + baseBandResult.result);
+//        switch (baseBandResult.result) {
+//            case RESULT_MAYBE_EMULATOR:
+//                suspectCount += 2;//模拟器基带信息为null的情况概率相当大
+//                break;
+//            case RESULT_EMULATOR:
+//                return true;
+//        }
+//
+//        //检测传感器数量
+//        int sensorNumber = getSensorNumber(context);
+//        Log.d(TAG, "sensorNumber = " + sensorNumber);
+//        //传感器太少的有可能是低配或是老旧的真机平板
+//        if (sensorNumber <= 7 && sensorNumber >= 4) {
+//            ++suspectCount;
+//        }
 
         //检测已安装第三方应用数量
 //        int userAppNumber = getUserAppNumber();
@@ -139,31 +139,31 @@ public class EmulatorDetectUtil {
 //            ++suspectCount;
 //        }
 
-        //检测是否支持闪光灯
-        boolean supportCameraFlash = supportCameraFlash(context);
-        Log.d(TAG, "supportCameraFlash = " + supportCameraFlash);
-        if (!supportCameraFlash) {
-            ++suspectCount;
-        }
-        //检测是否支持相机
-        boolean supportCamera = supportCamera(context);
-        Log.d(TAG, "supportCamera = " + supportCamera);
-        if (!supportCamera) {
-            ++suspectCount;
-        }
-        //检测是否支持蓝牙
-        boolean supportBluetooth = supportBluetooth(context);
-        Log.d(TAG, "supportBluetooth = " + supportBluetooth);
-        if (!supportBluetooth) {
-            ++suspectCount;
-        }
+//        //检测是否支持闪光灯
+//        boolean supportCameraFlash = supportCameraFlash(context);
+//        Log.d(TAG, "supportCameraFlash = " + supportCameraFlash);
+//        if (!supportCameraFlash) {
+//            ++suspectCount;
+//        }
+//        //检测是否支持相机
+//        boolean supportCamera = supportCamera(context);
+//        Log.d(TAG, "supportCamera = " + supportCamera);
+//        if (!supportCamera) {
+//            ++suspectCount;
+//        }
+//        //检测是否支持蓝牙
+//        boolean supportBluetooth = supportBluetooth(context);
+//        Log.d(TAG, "supportBluetooth = " + supportBluetooth);
+//        if (!supportBluetooth) {
+//            ++suspectCount;
+//        }
 
-        //检测光线传感器
-        boolean hasLightSensor = hasLightSensor(context);
-        Log.d(TAG, "hasLightSensor = " + hasLightSensor);
-        if (!hasLightSensor) {
-            ++suspectCount;
-        }
+//        //检测光线传感器
+//        boolean hasLightSensor = hasLightSensor(context);
+//        Log.d(TAG, "hasLightSensor = " + hasLightSensor);
+//        if (!hasLightSensor) {
+//            ++suspectCount;
+//        }
 
         //先去掉，有的平板真机也没有该传感器
         //检测距离传感器
@@ -173,16 +173,15 @@ public class EmulatorDetectUtil {
 //            ++suspectCount;
 //        }
 
-        //检测进程组信息
-        CheckResult cgroupResult = checkFeaturesByCgroup();
-        Log.d(TAG, "cgroupResult = " + cgroupResult);
-        if (cgroupResult.result == RESULT_MAYBE_EMULATOR) {
-            ++suspectCount;
-        }
+//        检测进程组信息
+//        CheckResult cgroupResult = checkFeaturesByCgroup();
+//        Log.d(TAG, "cgroupResult = " + cgroupResult);
+//        if (cgroupResult.result == RESULT_MAYBE_EMULATOR) {
+//            ++suspectCount;
+//        }
 
-        Log.d(TAG, "suspectCount = " + suspectCount);
-
-        return suspectCount > 3;
+//        return suspectCount > 3;
+        return false;
     }
 
     private int getUserAppNum(String userApps) {
