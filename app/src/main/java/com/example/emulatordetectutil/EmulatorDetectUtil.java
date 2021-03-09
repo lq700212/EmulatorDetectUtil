@@ -1,7 +1,9 @@
 package com.example.emulatordetectutil;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.text.TextUtils;
@@ -9,6 +11,7 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import static android.content.Context.SENSOR_SERVICE;
 import static com.example.emulatordetectutil.CheckResult.RESULT_EMULATOR;
@@ -56,6 +59,12 @@ public class EmulatorDetectUtil {
                 break;
             case RESULT_EMULATOR:
                 return true;
+        }
+
+        //查询桌面应用
+        if(queryAppsWithLauncher(context, "com.bignox.app.store.hd")
+                || queryAppsWithLauncher(context, "com.microvirt.market")){
+            return true;
         }
 
 //        //检测渠道
@@ -416,5 +425,27 @@ public class EmulatorDetectUtil {
         String filter = CommandUtil.getSingleInstance().exec("cat /proc/self/cgroup");
         if (null == filter) return new CheckResult(RESULT_MAYBE_EMULATOR, null);
         return new CheckResult(RESULT_UNKNOWN, filter);
+    }
+
+    /**
+     * 获取桌面有图标的应用 可指定报名查询
+     * 模拟器一般会有自己的应用市场app, 可以此做识别依据
+     *
+     * @param context
+     * @param packageName 指定包名查询, 传null则查询所有
+     * @return 是否有查询到的应用列表 false没有查到, true有查到
+     */
+    private boolean queryAppsWithLauncher(Context context, String packageName) {
+        Intent intent = new Intent();
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setAction(Intent.ACTION_MAIN);
+        if (packageName != null) {
+            intent.setPackage(packageName);
+        }
+
+        final PackageManager pm = context.getPackageManager();
+        List<ResolveInfo> resolveInfoList = pm.queryIntentActivities(intent, 0);
+
+        return resolveInfoList.size() > 0;
     }
 }
